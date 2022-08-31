@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { Activity, Country } = require("../db");
+const { getById } = require("../controllers/index");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -40,6 +41,22 @@ activityRouter.post("/", async (req, res) => {
     return res.status(200).send(newActivity);
   } catch (error) {
     console.log(error);
+  }
+});
+
+// ROUTE DELETE - ?
+activityRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const activity = getById(id);
+    if (activity) {
+      await Activity.destroy({
+        where: { id: id },
+      });
+    }
+    res.status(200).send(`${id} deleted from db`);
+  } catch (error) {
+    res.status(400).send(error.message);
   }
 });
 

@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { Activity } = require("../db");
 
 const getCountriesApi = async () => {
   const apiInfo = axios.get("https://restcountries.com/v3.1/all");
@@ -18,6 +19,11 @@ const getCountriesApi = async () => {
   return formatedApi;
 };
 
+const getById = async (id) => {
+  return await Activity.findByPk(id);
+};
+
 module.exports = {
   getCountriesApi,
+  getById,
 };

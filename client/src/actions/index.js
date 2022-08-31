@@ -9,6 +9,7 @@ export const GET_DETAIL = "GET_DETAIL";
 export const GET_ACTIVITIES = "GET_ACTIVITIES";
 export const CREATE_ACTIVITY = "CREATE_ACTIVITY";
 export const FILTER_ACTIVITIES = "FILTER_ACTIVITIES";
+export const DELETE_ACTIVITY = "DELETE_ACTIVITY";
 
 export function getCountries() {
   return async function (dispatch) {
@@ -92,5 +93,17 @@ export function filterActivities(payload) {
   return {
     type: FILTER_ACTIVITIES,
     payload: payload,
+  };
+}
+
+export function deleteActivity(id) {
+  return async function (dispatch) {
+    const activityDelete = await axios.delete(
+      `http://localhost:3001/activity/${id}`
+    );
+    return dispatch({
+      type: DELETE_ACTIVITY,
+      payload: id,
+    });
   };
 }
