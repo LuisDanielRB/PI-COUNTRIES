@@ -1,0 +1,52 @@
+.divCard {
+  width: 250px;
+  overflow: hidden;
+  max-width: 24rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.divInnerCardHalf {
+  width: 100%;
+  height: 50%;
+}
+
+.divImage {
+  width: 100%;
+  height: 100%;
+}
+
+.divName {
+  font-weight: bold;
+  text-align: center;
+  padding: 5px;
+}
+
+.pInfo {
+  text-align: center;
+  font-size: small;
+}
+
+.linkDetail {
+  text-align: center;
+}
+
+.linkButton {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: transparent;
+  color: #1d4ed8;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: #3b82f6;
+}
+
+.linkButton:hover {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border-color: transparent;
+}

@@ -1,0 +1,29 @@
+ul.pagination {
+  margin-top: 30px;
+  cursor: pointer;
+  display: flex;
+  border-radius: 10px;
+  cursor: pointer;
+  justify-content: center;
+}
+
+ul.pagination li {
+  display: inline;
+  margin: 2px;
+}
+
+ul.pagination li a {
+  color: rgb(0, 0, 0);
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+ul.pagination li a.active {
+  background-color: beige;
+  color: blueviolet;
+}
+
+ul.pagination li a:hover:not(.active) {
+  background-color: rgb(72, 17, 94);
+}

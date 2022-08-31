@@ -1,0 +1,45 @@
+.navbarContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.navbarLinks {
+  display: flex;
+  width: 70%;
+  justify-content: space-evenly;
+}
+
+.navbarLogo p {
+  font-style: normal;
+  font-weight: 300;
+  color: #7d7d7d;
+}
+
+a:link {
+  text-decoration: none;
+  color: #7d7d7d;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #7d7d7d;
+}
+
+a:hover {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:active {
+  text-decoration: none;
+  font-weight: bold;
+  color: #7d7d7d;
+}
+
+.navbarLinkSelected {
+  font-weight: bold;
+  color: #7d7d7d;
+}
