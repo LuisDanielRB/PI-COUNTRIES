@@ -10,6 +10,7 @@ export const GET_ACTIVITIES = "GET_ACTIVITIES";
 export const CREATE_ACTIVITY = "CREATE_ACTIVITY";
 export const FILTER_ACTIVITIES = "FILTER_ACTIVITIES";
 export const DELETE_ACTIVITY = "DELETE_ACTIVITY";
+export const EDIT_ACTIVITY = "EDIT_ACTIVITY";
 
 export function getCountries() {
   return async function (dispatch) {
@@ -104,6 +105,19 @@ export function deleteActivity(id) {
     return dispatch({
       type: DELETE_ACTIVITY,
       payload: id,
+    });
+  };
+}
+
+export function updateActivity(id, body) {
+  return async function (dispatch) {
+    const activity = await axios.put(
+      `http://localhost:3001/activity/${id}`,
+      body
+    );
+    return dispatch({
+      type: EDIT_ACTIVITY,
+      payload: activity.data,
     });
   };
 }

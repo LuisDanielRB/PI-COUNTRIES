@@ -44,7 +44,7 @@ activityRouter.post("/", async (req, res) => {
   }
 });
 
-// ROUTE DELETE - ?
+// ROUTE DELETE - DONE
 activityRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -55,6 +55,20 @@ activityRouter.delete("/:id", async (req, res) => {
       });
     }
     res.status(200).send(`${id} deleted from db`);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+// ROUTE EDIT - ?
+activityRouter.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { body } = req.body;
+  try {
+    const activity = await Activity.update(body, {
+      where: { id: id },
+    });
+    res.status(200).send(activity).data;
   } catch (error) {
     res.status(400).send(error.message);
   }

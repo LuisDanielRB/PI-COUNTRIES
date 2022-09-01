@@ -6,6 +6,7 @@ import {
   createActivity,
   getActivities,
   deleteActivity,
+  updateActivity,
 } from "../actions";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
@@ -43,11 +44,6 @@ export default function ActivityCreate() {
   const countries = useSelector((state) => state.countries);
   const activities = useSelector((state) => state.activities);
 
-  useEffect(() => {
-    dispatch(getCountries());
-    dispatch(getActivities());
-  }, [dispatch]);
-
   const [select, setSelect] = useState({
     countries: [],
   });
@@ -60,37 +56,11 @@ export default function ActivityCreate() {
     countries: [],
   });
 
+  const [edit, setEdit] = useState("Create Activity");
+
   function handleInputChange(e) {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (
-      input.name === "" ||
-      input.difficulty === "" ||
-      input.duration < 0 ||
-      input.season === "" ||
-      input.countries.length < 1
-    ) {
-      alert("Invalid fields, please try again");
-    } else {
-      dispatch(createActivity(input));
-      alert(`Activity ${input.name} created!`);
-      setSelect({
-        countries: [],
-      });
-      setInput({
-        name: "",
-        difficulty: "",
-        duration: "",
-        season: "",
-        countries: [],
-      });
-      document.getElementById("form").reset();
-    }
-    // redirigir al home?
   }
 
   function handleSelect(e) {
@@ -207,6 +177,82 @@ export default function ActivityCreate() {
     dispatch(deleteActivity(id));
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (edit === "Create Activity") {
+      if (
+        input.name === "" ||
+        input.difficulty === "" ||
+        input.duration < 0 ||
+        input.season === "" ||
+        input.countries.length < 1
+      ) {
+        alert("Invalid fields, please try again");
+      } else {
+        dispatch(createActivity(input));
+        alert(`Activity ${input.name} created!`);
+        setSelect({
+          countries: [],
+        });
+        setInput({
+          name: "",
+          difficulty: "",
+          duration: "",
+          season: "",
+          countries: [],
+        });
+        document.getElementById("form").reset();
+      }
+    } else {
+      dispatch(updateActivity(input.id, input));
+      alert(`Activity ${input.name} updated!`);
+      setSelect({
+        countries: [],
+      });
+      setInput({
+        name: "",
+        difficulty: "",
+        duration: "",
+        season: "",
+        countries: [],
+      });
+      document.getElementById("form").reset();
+      setEdit("Create Activity");
+    }
+    // redirigir al home?
+  }
+
+  function handleEdit(e, id, name, difficulty, duration, season, countries) {
+    e.preventDefault();
+    setEdit("Update Activity");
+    const paises = [];
+    // console.log(countries);
+    for (let index = 0; index < countries.length; index++) {
+      paises.push(countries[index].name);
+    }
+    // console.log(paises);
+    setSelect({
+      countries: paises,
+    });
+    setInput({
+      id,
+      name,
+      difficulty,
+      duration,
+      season,
+      countries: paises,
+    });
+    document.querySelector("#name").value = name;
+    document.querySelector("#difficulty").value = difficulty;
+    document.querySelector("#duration").value = duration;
+    document.querySelector("#season").value = season;
+  }
+
+  useEffect(() => {
+    dispatch(getCountries());
+    dispatch(getActivities());
+  }, [dispatch]);
+
   return (
     <>
       <div className="createContainer">
@@ -227,12 +273,17 @@ export default function ActivityCreate() {
                 onChange={(e) => handleInputChange(e)}
                 type="text"
                 name="name"
+                id="name"
               />
             </div>
 
             <div className="divInput">
               <label className="labelDifficulty">Activity Difficulty</label>
-              <select name="difficulty" onChange={(e) => handleInputChange(e)}>
+              <select
+                id="difficulty"
+                name="difficulty"
+                onChange={(e) => handleInputChange(e)}
+              >
                 <option value="" hidden>
                   Select a difficulty
                 </option>
@@ -251,12 +302,17 @@ export default function ActivityCreate() {
                 onChange={(e) => handleInputChange(e)}
                 type="text"
                 name="duration"
+                id="duration"
               />
             </div>
 
             <div className="divInput">
               <label className="labelSeason">Season</label>
-              <select name="season" onChange={(e) => handleInputChange(e)}>
+              <select
+                id="season"
+                name="season"
+                onChange={(e) => handleInputChange(e)}
+              >
                 <option value="" hidden>
                   Select a season
                 </option>
@@ -284,8 +340,9 @@ export default function ActivityCreate() {
                   })}
               </select>
             </div>
+
             <div className="divCountries">
-              {select.countries === 0 ? (
+              {select.countries.length === 0 ? (
                 <div className="noDivSelect">Select the Countries</div>
               ) : (
                 select.countries?.map((country) => {
@@ -307,13 +364,14 @@ export default function ActivityCreate() {
             </div>
           </form>
         </div>
+
         <div className="divSubmit">
           <button
             className="button"
             type="submit"
             onClick={(e) => handleSubmit(e)}
           >
-            Create Activity
+            {edit}
           </button>
         </div>
 
@@ -346,6 +404,21 @@ export default function ActivityCreate() {
                     <p>{activity.season}</p>
                     <button onClick={(e) => handleDelete(e, activity.id)}>
                       DELETE
+                    </button>
+                    <button
+                      onClick={(e) =>
+                        handleEdit(
+                          e,
+                          activity.id,
+                          activity.name,
+                          activity.difficulty,
+                          activity.duration,
+                          activity.season,
+                          activity.countries
+                        )
+                      }
+                    >
+                      EDIT
                     </button>
                   </div>
                 );

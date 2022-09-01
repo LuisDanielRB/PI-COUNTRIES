@@ -9,6 +9,8 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_POPULATION,
   DELETE_ACTIVITY,
+  EDIT_ACTIVITY,
+  getActivities,
 } from "../actions";
 
 const initialState = {
@@ -134,6 +136,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         activities: state.activities.filter((e) => e.id !== action.payload),
+      };
+
+    case EDIT_ACTIVITY:
+      return {
+        ...state,
+        activities: getActivities(),
       };
 
     default:
