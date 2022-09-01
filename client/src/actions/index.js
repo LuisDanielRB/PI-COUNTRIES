@@ -14,7 +14,7 @@ export const EDIT_ACTIVITY = "EDIT_ACTIVITY";
 
 export function getCountries() {
   return async function (dispatch) {
-    const countries = await axios.get("http://localhost:3001/country");
+    const countries = await axios.get("/country");
     return dispatch({
       type: GET_COUNTRIES,
       payload: countries.data,
@@ -45,9 +45,7 @@ export function orderByPopulation(payload) {
 
 export function getCountryByName(name) {
   return async function (dispatch) {
-    const countryByName = await axios.get(
-      `http://localhost:3001/country?name=${name}`
-    );
+    const countryByName = await axios.get(`/country?name=${name}`);
     return dispatch({
       type: GET_BY_NAME,
       payload: countryByName.data,
@@ -57,9 +55,7 @@ export function getCountryByName(name) {
 
 export function getDetail(id) {
   return async function (dispatch) {
-    const countryFound = await axios.get(
-      ` http://localhost:3001/country/${id}`
-    );
+    const countryFound = await axios.get(`/country/${id}`);
     return dispatch({
       type: GET_DETAIL,
       payload: countryFound.data,
@@ -69,7 +65,7 @@ export function getDetail(id) {
 
 export function getActivities() {
   return async function (dispatch) {
-    const activities = await axios.get("http://localhost:3001/activity");
+    const activities = await axios.get("/activity");
     return dispatch({
       type: GET_ACTIVITIES,
       payload: activities.data,
@@ -79,10 +75,7 @@ export function getActivities() {
 
 export function createActivity(payload) {
   return async function (dispatch) {
-    const newActivity = await axios.post(
-      "http://localhost:3001/activity",
-      payload
-    );
+    const newActivity = await axios.post("/activity", payload);
     return dispatch({
       type: CREATE_ACTIVITY,
       payload: newActivity.data,
@@ -99,9 +92,7 @@ export function filterActivities(payload) {
 
 export function deleteActivity(id) {
   return async function (dispatch) {
-    const activityDelete = await axios.delete(
-      `http://localhost:3001/activity/${id}`
-    );
+    const activityDelete = await axios.delete(`/activity/${id}`);
     return dispatch({
       type: DELETE_ACTIVITY,
       payload: id,
@@ -111,10 +102,7 @@ export function deleteActivity(id) {
 
 export function updateActivity(id, body) {
   return async function (dispatch) {
-    const activity = await axios.put(
-      `http://localhost:3001/activity/${id}`,
-      body
-    );
+    const activity = await axios.put(`/activity/${id}`, body);
     return dispatch({
       type: EDIT_ACTIVITY,
       payload: activity.data,
