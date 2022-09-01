@@ -12,8 +12,8 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 //   }
 // );
 
-const sequelize =
-  process.env.NODE_EV === "production"
+let sequelize =
+  process.env.NODE_ENV === "production"
     ? new Sequelize({
         database: DB_NAME,
         dialect: "postgres",
@@ -29,7 +29,7 @@ const sequelize =
         dialectOptions: {
           ssl: {
             require: true,
-            // Ref: https://github.com/brianc/node-postgres/issues/2009
+            // Ref.: https://github.com/brianc/node-postgres/issues/2009
             rejectUnauthorized: false,
           },
           keepAlive: true,
@@ -38,10 +38,7 @@ const sequelize =
       })
     : new Sequelize(
         `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/countries`,
-        {
-          logging: false,
-          native: false,
-        }
+        { logging: false, native: false }
       );
 
 const basename = path.basename(__filename);
